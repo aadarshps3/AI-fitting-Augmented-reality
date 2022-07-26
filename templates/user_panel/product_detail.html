@@ -1,0 +1,161 @@
+{% extends 'user_panel/user_home.html' %}
+{% load static  %}
+{% load crispy_forms_filters  %}
+{% block content1 %}
+
+			<!-- SINGLE-PRODUCT-AREA START -->
+			<div class="single-product-aea margin-bottom-80">
+				<div class="container">
+					<div class="row">
+						   {% for message in messages %}
+            <div class="alert alert-info" role="alert">
+                {{message}}
+            </div>
+            {% endfor %}
+						<form method="post">{% csrf_token %}
+						{% for i in data %}
+						<div class="col-md-5 col-sm-5 col-xs-12">
+							<div class="single-product-tab-content">
+								<!-- Tab panes -->
+
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="img-one">
+										<img src="{{i.image1.url}}" alt="" />
+
+									</div>
+
+								</div>
+
+							</div>
+						</div>
+
+						<div class="col-md-5 col-sm-5 col-xs-12" >
+							<div class="single-pro-product-description">
+											<h2 class="title-4">Product Description</h2>
+											<p>{{i.description}} </p>
+										</div>
+							<div class="single-product-description">
+								<h3 class="title-3">{{i.ProductName}}</h3>
+								<h4>Rs. {{i.TotalAmount}}</h4>
+
+
+								<div class="product-counts fix margin-top-80">
+
+
+
+									<div class="single-pro-add-cart">
+									<a href="{% url 'add_to_cart' i.pk %}" class="shop-now" type="submit">Add to cart</a>
+
+
+									</div>
+								</div>
+								<div class="single-pro-share">
+									<ul>
+
+									</ul>
+								</div>
+								<div class="categories-tags">
+									<div class="categories">
+										<span>CATEGORY:</span>
+										<p>{{i.productBrand}}</p>
+										<p>{{i.cloth}}</p>
+										<p>{{i.size}}</p>
+
+									</div>
+
+								</div>
+							</div>
+						</div>
+							</form>
+
+					</div>
+				</div>
+			</div>
+			<!-- SINGLE-PRODUCT-AREA END -->
+			<!-- SINGLE-PRODUCT-REVIEWS-AREA START -->
+			<div class="single-product-reviews-area margin-bottom-80">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="discription-reviews-tab">
+								<!-- Nav tabs -->
+								<ul class="reviews-tab-menu" role="tablist">
+									<li role="presentation" class="active"><a href="#description" data-toggle="tab">Description</a></li>
+									<li role="presentation"><a href="#reviews"  data-toggle="tab">Reviews</a></li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="description">
+
+									</div>
+									<div role="tabpanel" class="tab-pane" id="reviews">
+										<div class="product-page-comments">
+											<h2>{{reviews_count}} review for {{i.title}}</h2>
+											<ul>
+												{% for review in i.reviews.all %}
+												<li>
+													<div class="product-comments">
+<!--														<img src="{% static 'home/img/author.jpg' %}" alt="" />-->
+														<div class="product-comments-content">
+															<p><strong>{{review.customer}}</strong> -
+																<span>{{review.date_added}}:</span>
+																<span class="pro-comments-rating">
+																	{% if review.rating == 1 %}
+																	<i class="sp-star"></i>
+																	{% elif review.rating == 2 %}
+																	<i class="sp-star"></i>							
+																	<i class="sp-star"></i>
+																		{% elif review.rating == 3 %}
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	{% elif review.rating == 4 %}
+																		<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	{% elif review.rating == 5 %}
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	<i class="sp-star"></i>
+																	{% endif %}
+
+																</span><span>
+
+														</span>
+
+															</p>
+															<div class="desc">
+																{{review.review}}.
+															</div>
+														</div>
+													</div>
+												</li>
+												{% endfor %}
+											</ul>
+											<div class="review-form-wrapper">
+												<h3>Add a review</h3>
+												<form  method="post">{% csrf_token %}
+
+
+
+													{{form.rating|as_crispy_field}}
+													{{form.review|as_crispy_field}}
+													<input type="submit" value="submit" />
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+{% endfor %}
+			<!-- SINGLE-PRODUCT-REVIEWS-AREA END -->
+
+
+		{% endblock %}

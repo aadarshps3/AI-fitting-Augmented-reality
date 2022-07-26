@@ -1,0 +1,109 @@
+{% extends 'user_panel/user_home.html' %}
+{% load crispy_forms_filters %}
+
+{% block content1 %}
+{% load static %}}
+
+
+<div class="container-fluid bg-secondary mb-5">
+
+
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">Your Orders</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">Orders</p>
+            </div>
+        </div>
+    </div>
+
+        <div class="shopping-cart-area margin-bottom-80">
+
+                <div class="row">
+                    {% for message in messages %}
+                    <div class="alert alert-info" role="alert">
+                        {{message}}
+                    </div>
+                    {% endfor %}
+                </div>
+           </div>
+        </div>
+
+
+
+                <table class="table table-bordered text-center mb-0">
+                    <thead class="bg-secondary text-dark">
+                        <tr>
+                                    <tr>
+                                        <th class="product-thumbnail">SI No</th>
+                                        <th class="product-name">Order ID</th>
+                                        <th class="product-price">Ordered date</th>
+                                        <th class="product-quantity">Products</th>
+                                        <th class="product-quantity">Order Total</th>
+                                        <th class="product-quantity">Status</th>
+
+                                    </tr></thead>
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{order.id}}</td>
+                                        <td>{{order.ordered_date}}</td>
+                                        <td>
+                                            <table>
+
+                                                <tr>
+                                                    <th class="product-thumbnail">Image</th>
+                                                    <th class="product-name">Name</th>
+                                                    <th class="product-price">price</th>
+                                                    <th class="product-quantity">Quantity</th>
+                                                    <th class="product-subtotal">Subtotal</th>
+
+                                                </tr>
+
+
+                                                {% for i in order.items.all %}
+                                                <tr>
+                                                    <td class="product-thumbnail"><a href="#"><img
+                                                            src="{{i.item.image1.url}}"
+                                                            alt=""/></a></td>
+                                                    <td class="product-name"><a href="#">{{i.item.ProductName}}</a></td>
+
+                                                    <td class="product-price"><span
+                                                            class="amount">Rs. {{i.item.TotalAmount}}</span></td>
+                                                    <td class="product-quantity">
+
+                                                        {{i.quantity}}
+
+                                                    </td>
+                                                    <td class="product-subtotal">Rs. {{ i.get_total_item_price }}</td>
+
+                                                </tr>
+                                                {% endfor %}
+
+
+
+                                            </table>
+                                        </td>
+                                        <td>{{order.get_total}}</td>
+
+                                        <td>
+                                            {% if order.completed == True %}
+                                            <button class="btn btn-success ">
+                                                Delivered on {{order.completed_date}}
+                                            </button>
+                                            {% else %}
+                                            <button class="btn btn-danger "> Pending</button>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </table>
+                            </div>
+
+
+
+                    </div>
+                </div>
+
+{% endblock  %}

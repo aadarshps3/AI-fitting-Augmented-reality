@@ -1,0 +1,73 @@
+{% extends 'user_panel/user_home.html' %}
+{% load crispy_forms_filters %}
+
+{% block content1 %}
+{% load static %}
+ <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+            <h1 class="font-weight-semi-bold text-uppercase mb-3">PAYMENT</h1>
+            <div class="d-inline-flex">
+                <p class="m-0"><a href="">Home</a></p>
+                <p class="m-0 px-2">-</p>
+                <p class="m-0">PAYMENT</p>
+            </div>
+        </div>
+      <div class="card border-secondary mb-2">
+
+                    <div class="card-body">
+                         <form method="post">{% csrf_token %}
+                        {{form|crispy}}
+
+
+                             <div class="col-md-6">
+                            <div class="your-order">
+                                <h3 class="title-7 margin-bottom-50">Your Order</h3>
+                                <div class="your-order-table table-responsive">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th class="product-name">Product</th>
+                                            <th class="product-total">Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                      {% for i in object.items.all %}
+
+
+                                        <tr>
+                                            <td class="product-name">{{i.item.ProductName}} x {{i.quantity}}</td>
+                                            <td class="product-total">Rs. {{ i.get_total_item_price }}</td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        <tr>
+                                            <td class="product-name order-total">Order Total</td>
+                                            <td class="product-total order-total">Rs {{ object.get_total }}</td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                    <div class="payment-method">
+                                        <div class="payment-accordion">
+                                            <!-- ACCORDION START -->
+
+                                            <!-- ACCORDION END -->
+                                            <!-- ACCORDION START -->
+
+
+                                            <!-- ACCORDION END -->
+                                        </div>
+                                       <div class="btn btn-primary">
+                                            <input type="submit" value="Place order"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         </form>
+                        </div>
+    </div>
+
+ </div>
+
+          {% endblock %}

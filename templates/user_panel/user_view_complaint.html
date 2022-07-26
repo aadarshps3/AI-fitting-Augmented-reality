@@ -1,0 +1,44 @@
+{% extends 'user_panel/user_home.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+<div class="col-lg-8 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Reply Table</h4>
+<!--                  <p class="card-description">-->
+<!--                    Add class <code>.table</code>-->
+<!--                  </p>-->
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="co">SL NO.</th>
+<!--                          <th scope="co">Name.</th>-->
+                          <th scope="co">Complaint.</th>
+                          <th scope="co">Date.</th>
+                          <th scope="co">Reply.</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for n in n %}
+                        <tr>
+                          <th scope="row">{{forloop.counter}}</th>
+<!--                          <td>{{n.user}}</td>-->
+                          <td>{{n.complaint}}</td>
+                          <td>{{n.date}}</td>
+                          <td>
+                            {% if n.reply == None %}
+                            <p>No Reply Yet..</p>
+                            {% else %}
+                            {{n.reply}}
+                            {% endif %}
+                          </td>
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+{% endblock %}

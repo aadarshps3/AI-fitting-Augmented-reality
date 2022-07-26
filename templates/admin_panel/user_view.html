@@ -1,0 +1,52 @@
+{% extends 'admin_panel/admin_home.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+<div class="col-lg-8 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Product Table</h4>
+<!--                  <p class="card-description">-->
+<!--                    Add class <code>.table</code>-->
+<!--                  </p>-->
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>SL NO.</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Gender</th>
+                          <th>Contact Number</th>
+
+
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for  i in customer %}
+                        <tr>
+                          <td>{{forloop.counter}}</td>
+                          <td>{{i.FullName}}</td>
+                          <td>{{i.Email}}</td>
+                          <td>{{i.gender}}</td>
+                          <td>{{i.Contact_no}}</td>
+                          <td>
+                              <form action="{% url 'delete_user' i.id %}" method="post">
+                                {% csrf_token %}
+                              <button type="submit" class="btn btn-danger">Delete User</button>
+                              </form>
+                          </td>
+
+
+
+
+
+
+                        </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        {% endblock %}
